@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+
+    <table>
+        <tr th:each="row: ${matrix.data}">
+            <td th:each="value: ${row}" th:text="${value}"/>
+        </tr>
+    </table>
+
+    <div>
+        <p>
+            Saddle point:
+            row: <span th:text="${matrix.findSaddlePoints().getRow()}"/>,
+            col: <span th:text="${matrix.findSaddlePoints().getCol()}"/>,
+            value: <span th:text="${matrix.findSaddlePoints().getValue()}"/>.
+        </p>
+    </div>
+
+</div>
+</body>
+</html>
