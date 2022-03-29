@@ -28,6 +28,7 @@ public class UploadMatrixPostController {
 
         matrix.setSize(tmp.length);
         matrix.setData(tmp);
+        matrix.setSaddlePoint(matrix.findSaddlePoints());
 
         return "result";
     }
