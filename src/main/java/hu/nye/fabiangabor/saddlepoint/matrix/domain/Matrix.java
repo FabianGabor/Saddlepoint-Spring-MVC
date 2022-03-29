@@ -17,40 +17,30 @@ public class Matrix {
     }
 
     public Coord findSaddlePoints() {
-        Coord min = new Coord(0, 0, Integer.MAX_VALUE);
-        Coord max = new Coord(0, 0, Integer.MIN_VALUE);
+        for (int i = 0; i < data.length; i++) {
+            boolean isSaddlePointPresentInRow = true;
 
-        for (int row = 0; row < size; row++) {
-            min.setValue(data[row][0]);
-            min.setRow(row);
-            min.setCol(0);
+            int minimum = data[i][0];
+            int colIndexOfRowMinimum = 0;
 
-            int col;
-            for (col = 0; col < size; col++) {
-                if (min.getValue() >= data[row][col]) {
-                    min.setValue(data[row][col]);
-                    min.setRow(row);
-                    min.setCol(col);
+            //Find minimum in row.
+            for(int j=1; j< data[0].length; j++){
+                if(data[i][j] < minimum){
+                    minimum = data[i][j];
+                    colIndexOfRowMinimum = j;
                 }
             }
 
-            col = min.getCol();
-            max.setValue(data[0][col]);
-            max.setRow(0);
-            max.setCol(col);
-
-            for (int row2 = 0; row2 < size; row2++) {
-                if (max.getValue() <= data[row2][col]) {
-                    max.setValue(data[row2][col]);
-                    max.setRow(row2);
-                    max.setCol(col);
+            //Find maximum in same column.
+            for (int j = 0; j < data.length && isSaddlePointPresentInRow; j++) {
+                if (minimum < data[j][colIndexOfRowMinimum]){
+                    isSaddlePointPresentInRow = false;
                 }
             }
-        }
 
-        if (min.getValue() == max.getValue()) {
-            this.saddlePoint = min;
-            return saddlePoint;
+            if(isSaddlePointPresentInRow){
+                return new Coord(i, colIndexOfRowMinimum, data[i][colIndexOfRowMinimum]);
+            }
         }
         return null;
     }
