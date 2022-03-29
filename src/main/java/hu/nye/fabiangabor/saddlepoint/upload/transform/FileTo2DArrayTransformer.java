@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileTo2DArrayTransformer {
 
@@ -17,24 +15,22 @@ public class FileTo2DArrayTransformer {
 
     @ModelAttribute("matrix")
     public int[][] transform() throws IOException {
-        byte[] content = file.getBytes();
-        List<Integer> list = new ArrayList<>();
 
-        for (byte b : content) {
-            if (b != ' ' && b != '\n') {
-                int value = Character.getNumericValue(b);
-                list.add(value);
-            }
-        }
+        String fileContent = inputStreamToString(file);
+        String[] numbers = fileContent.split("\n");
+        int[][] tmp = new int[numbers.length][numbers.length];
 
-        int[][] tmp = new int[(int) Math.sqrt(list.size())][(int) Math.sqrt(list.size())];
-
-        for (int i = 0; i < tmp.length; i++) {
-            for (int j = 0; j < tmp.length; j++) {
-                tmp[i][j] = list.get(i*tmp.length+j);
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = 0; j < numbers.length; j++) {
+                tmp[i][j] = Integer.parseInt(numbers[i].split(" ")[j]);
             }
         }
 
         return tmp;
+    }
+
+    private String inputStreamToString(MultipartFile file) throws IOException {
+        byte[] bytes = file.getBytes();
+        return new String(bytes);
     }
 }
