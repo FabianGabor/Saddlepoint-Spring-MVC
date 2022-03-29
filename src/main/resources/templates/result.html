@@ -16,9 +16,9 @@
     <div>
         <p>
             Saddle point:
-            row: <span th:text="${matrix.findSaddlePoints().getRow()}"/>,
-            col: <span th:text="${matrix.findSaddlePoints().getCol()}"/>,
-            value: <span th:text="${matrix.findSaddlePoints().getValue()}"/>.
+            row: <span th:text="${matrix.saddlePoint != null? matrix.saddlePoint.getRow() : '-'}"></span>,
+            col: <span th:text="${matrix.saddlePoint != null? matrix.saddlePoint.getCol() : '-'}"></span>,
+            value: <span th:text="${matrix.saddlePoint != null? matrix.saddlePoint.getValue() : '-'}"></span>.
         </p>
     </div>
 
