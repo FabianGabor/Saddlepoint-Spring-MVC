@@ -23,12 +23,8 @@ public class UploadMatrixPostRestController {
     @PostMapping("/rest/matrix")
     public Matrix addMatrixPost(@Valid Matrix matrix, @RequestParam("file") MultipartFile file) throws IOException {
 
-        FileTo2DArrayTransformer fileTo2DArrayTransformer = new FileTo2DArrayTransformer(file);
-        int[][] tmp = fileTo2DArrayTransformer.transform();
+        FileTo2DArrayTransformer fileTo2DArrayTransformer = new FileTo2DArrayTransformer();
+        return fileTo2DArrayTransformer.convertFileToMatrix(file);
 
-        matrix.setSize(tmp.length);
-        matrix.setData(tmp);
-
-        return new Matrix(tmp);
     }
 }
